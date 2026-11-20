@@ -1,0 +1,9 @@
+* text=auto
+*.unitypackage binary
+*.fbx binary
+*.psd binary
+*.png binary
+*.jpg binary
+*.wav binary
+*.mp3 binary
+*.dll binary
