@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "character": "King",
+  "frameSize": {
+    "width": 160,
+    "height": 160
+  },
+  "alpha": "binary",
+  "filter": "point",
+  "pixelsPerUnit": 128,
+  "pivot": {
+    "x": 0.6,
+    "y": 0.1
+  },
+  "directions": {
+    "right": "authored",
+    "left": "SpriteRenderer.flipX",
+    "up": null,
+    "down": null
+  },
+  "animations": {
+    "Walk": {
+      "frames": 8,
+      "fps": 10,
+      "loop": true,
+      "strip": "Frames/King_Walk_Strip.png"
+    },
+    "Run": {
+      "frames": 8,
+      "fps": 14,
+      "loop": true,
+      "strip": "Frames/King_Run_Strip.png"
+    }
+  },
+  "idle": "Static hold of Walk_01, not a separate authored idle cycle",
+  "motion": "in-place; no root motion"
+}

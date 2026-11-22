@@ -1,0 +1,25 @@
+国王角色：移动 / 奔跑资源包 v2
+
+游戏素材：16 张独立透明 PNG；每帧 160×160；走路和奔跑各 8 帧。
+图集：每个动作一张 1280×160 横条图，严格 8 列、无间距。
+播放：走路 10 fps；奔跑 14 fps；原地循环，不含位移。
+锚点：Unity 归一化 Pivot (0.6, 0.1)，对应画布内 x=96、从底部 y=16；PPU=128。
+画风：按参考图生成的像素角色，机械切帧、统一画布与锚点，PNG 使用透明背景。
+
+预览：直接打开 Preview/index.html，或查看 King_Walk.gif 和 King_Run.gif。
+GIF 有深色背景，游戏用 PNG 为透明背景。
+
+Unity 交付：KingMovement.unitypackage，可双击导入 Unity 2022.3。
+当前项目的资源目录：Assets/Art/KingMovement。
+Prefabs/WalkPreview.prefab 和 RunPreview.prefab 拖进场景即可循环播放。
+Prefabs/King.prefab 提供 SpriteRenderer 和 Animator，默认静止。
+控制参数：IsMoving 控制静止/移动；IsRunning 在移动时选择走路/奔跑。
+包内 Idle 为 Walk_01 静态保持，不是单独制作的待机动画。
+未改动现有 PlayerMove、角色和场景；游戏移动逻辑由项目接入这两个参数。
+
+方向：原画朝右；朝左可用 SpriteRenderer.flipX 镜像。
+本次不包含上行/下行的正背面动作。
+
+素材来源：内置 image_gen，以用户提供的国王图作为角色参考；生成提示词见 prompts.json。
+Source 保存生成原图；Tools 保存切帧打包工具；manifest.json 保存规格。
+Unity 实际导入及动画逐帧采样检查结果见 VALIDATION.txt。
