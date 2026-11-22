@@ -14,6 +14,7 @@ public class PlayerMove : MonoBehaviour
     private Animator ani;
 
     private Vector2 targetPosition;
+    private Vector2 direction;
     private bool isMoving;         // 是否正在走这一格
     private float nextMoveTime;    // 最早什么时候可以开始下一步
 
@@ -22,11 +23,13 @@ public class PlayerMove : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         targetPosition = rb.position;
         ani = GetComponent<Animator>();
+        ani.SetFloat("InputX", 1);
+        ani.SetBool("isMoving", false);
     }
 
     private void Update()
     {
-        Vector2 direction = ReadDirection();
+        direction = ReadDirection();
 
         if (direction == Vector2.zero)
         {
@@ -74,8 +77,6 @@ public class PlayerMove : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector2 direction = ReadDirection();
-
         // 还按着有效方向，并且前方可以走。
         bool wantsToContinue =
             direction != Vector2.zero && CanMove(direction);
@@ -90,7 +91,7 @@ public class PlayerMove : MonoBehaviour
     {
         ContactFilter2D filter = new ContactFilter2D();
         filter.SetLayerMask(obstacleLayers);
-        filter.useTriggers = false; // NPC 等触发区域不阻挡移动
+        filter.useTriggers = false;
 
         // 用玩家自身的碰撞体形状，检查前方一格。
         int hitCount = rb.Cast(
