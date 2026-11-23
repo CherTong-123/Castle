@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a1c32d7e782bf544af1f3b9af729fb7, type: 3}
+  m_Name: NewDialogue
+  m_EditorClassIdentifier: 
+  startNodeId: 0
+  nodes:
+  - id: 0
+    npcText: "\u4F60\u5403\u4E86\u996D\u5417"
+    options:
+    - text: "\u6CA1\u5403"
+      nextNodeId: 1
+    - text: "\u5403\u4E86"
+      nextNodeId: 2
+  - id: 1
+    npcText: "\u7559\u4E0B\u6765\u4E00\u8D77\u5403"
+    options:
+    - text: "\u7ED3\u675F"
+      nextNodeId: -1
+  - id: 2
+    npcText: "\u90A3\u5C31\u597D"
+    options:
+    - text: "\u7ED3\u675F"
+      nextNodeId: -1
