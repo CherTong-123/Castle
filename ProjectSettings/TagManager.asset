@@ -6,11 +6,12 @@ TagManager:
   tags:
   - NPC
   - Item
+  - Portal
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - obstacle
   - Water
   - UI
   - 
