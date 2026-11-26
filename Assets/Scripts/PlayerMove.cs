@@ -17,6 +17,39 @@ public class PlayerMove : MonoBehaviour
     private Vector2 direction;
     private bool isMoving;         // 是否正在走这一格
     private float nextMoveTime;    // 最早什么时候可以开始下一步
+    public bool IsDialogueLocked { get; private set; }
+    public bool IsMoving => isMoving;
+    public bool IsDialoguePending { get; private set; }
+    private RigidbodyConstraints2D constraintsBeforeDialogue;
+
+    /// <summary>等待当前格走完时，只阻止下一步输入，不中断当前移动。</summary>
+    public void SetDialoguePending(bool pending)
+    {
+        if (IsDialoguePending == pending) return;
+        IsDialoguePending = pending;
+        direction = Vector2.zero;
+        nextMoveTime = 0f;
+    }
+
+    /// <summary>站定后对话，冻结当前位置，结束后恢复原来的物理约束。</summary>
+    public void SetDialogueLocked(bool locked)
+    {
+        if (IsDialogueLocked == locked) return;
+        IsDialogueLocked = locked;
+        direction = Vector2.zero;
+        nextMoveTime = 0f;
+        if (locked)
+        {
+            constraintsBeforeDialogue = rb.constraints;
+            rb.velocity = Vector2.zero;
+            rb.constraints |= RigidbodyConstraints2D.FreezePosition;
+            if (ani != null) ani.SetBool("isMoving", false);
+        }
+        else
+        {
+            rb.constraints = constraintsBeforeDialogue;
+        }
+    }
 
     private void Awake()
     {
@@ -29,6 +62,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        if (IsDialogueLocked || IsDialoguePending) return;
         direction = ReadDirection();
 
         if (direction == Vector2.zero)
@@ -59,8 +93,13 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (IsDialogueLocked) return;
         if (!isMoving)
+        {
+            // 同一帧可能还有多次物理更新，走完后等待对话时不能带着速度漂移。
+            if (IsDialoguePending) rb.velocity = Vector2.zero;
             return;
+        }
 
         // 每次向目标格靠近一点。
         Vector2 nextPosition = Vector2.MoveTowards(
@@ -77,14 +116,24 @@ public class PlayerMove : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (IsDialogueLocked)
+        {
+            ani.SetBool("isMoving", false);
+            return;
+        }
         // 还按着有效方向，并且前方可以走。
         bool wantsToContinue =
-            direction != Vector2.zero && CanMove(direction);
+            !IsDialoguePending && direction != Vector2.zero && CanMove(direction);
 
         // 正在走这一格，或者准备继续走，都播放走路动画。
         bool shouldPlayWalk = isMoving || wantsToContinue;
 
         ani.SetBool("isMoving", shouldPlayWalk);
+    }
+
+    private void OnDestroy()
+    {
+        if (IsDialogueLocked && rb != null) SetDialogueLocked(false);
     }
 
     private bool CanMove(Vector2 direction)

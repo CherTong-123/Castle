@@ -15,19 +15,24 @@ MonoBehaviour:
   startNodeId: 0
   nodes:
   - id: 0
-    npcText: "\u4F60\u5403\u4E86\u996D\u5417"
+    npcText: Have you eaten?
     options:
-    - text: "\u6CA1\u5403"
-      nextNodeId: 1
-    - text: "\u5403\u4E86"
+    - text: Yes, I have.
       nextNodeId: 2
+    - text: Not yet.
+      nextNodeId: 1
   - id: 1
-    npcText: "\u7559\u4E0B\u6765\u4E00\u8D77\u5403"
+    npcText: Stay and eat with me.
     options:
-    - text: "\u7ED3\u675F"
-      nextNodeId: -1
+    - text: NO!
+      nextNodeId: 3
   - id: 2
-    npcText: "\u90A3\u5C31\u597D"
+    npcText: That's good.
     options:
-    - text: "\u7ED3\u675F"
+    - text: End.
+      nextNodeId: -1
+  - id: 3
+    npcText: Fuck
+    options:
+    - text: End.
       nextNodeId: -1
